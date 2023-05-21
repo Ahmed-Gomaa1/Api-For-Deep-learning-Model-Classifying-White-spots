@@ -1,0 +1,7 @@
+gunicorn
+flask
+urllib3==1.22
+tensorflow
+pillow
+numpy
+protobuf==3.9.2
