@@ -7,7 +7,7 @@ import tensorflow as tf
 
 app = Flask(__name__)
 
-classes = ['Normal Skin','Alpa','Tinea','Vitiligo']
+classes = ['Normal Skin','Pityriasis Alba','Tinea Versicolor','Vitiligo']
 with open('Best1Resnet50.tflite', 'rb') as fid:
     tflite_model = fid.read()
 tflite_interpreter = tf.lite.Interpreter(model_content=tflite_model)
@@ -23,6 +23,7 @@ def index():
 @app.route('/predictApi', methods=["POST"])
 def api():
     # Get the image from post request
+    try:
         if 'fileup' not in request.files:
             return "Please try again. The Image doesn't exist"
         image = request.files.get('fileup')
@@ -49,6 +50,8 @@ def api():
         prediction = classes[ind]
         print(prediction)
         return jsonify({'prediction': prediction})
+    except:
+        return jsonify({'Error': 'Error occur'})
 
 if __name__ == '__main__':
     app.run(debug=True)
