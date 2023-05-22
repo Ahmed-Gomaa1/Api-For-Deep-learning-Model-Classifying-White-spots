@@ -50,35 +50,6 @@ def api():
         prediction = classes[ind]
         print(prediction)
         return jsonify({'prediction': prediction})
-    except:
-        return jsonify({'Error': 'Error occur'})
-
-@app.route('/predict', methods=['GET', 'POST'])
-def predict():
-    print("run code")
-    if request.method == 'POST':
-        # Get the image from post request
-        print("image loading....")
-        image = request.files['fileup']
-        image_arr= preprossing(image)
-        print("predicting ...")
-        input_details = tflite_interpreter.get_input_details()
-        output_details = tflite_interpreter.get_output_details()
-        tflite_interpreter.resize_tensor_input(input_details[0]['index'], (1, 100, 100, 3))
-        tflite_interpreter.resize_tensor_input(output_details[0]['index'], (1, 4))
-        tflite_interpreter.allocate_tensors()
-        tflite_interpreter.set_tensor(input_details[0]['index'], image_arr)
-        tflite_interpreter.invoke()
-        tflite_model_predictions = tflite_interpreter.get_tensor(output_details[0]['index'])
-        print("Model finished predicting ...")
-
-        print(tflite_model_predictions)
-        ind = np.argmax(tflite_model_predictions)
-        prediction = classes[ind]
-        print(prediction)
-        return render_template('index.html', prediction=prediction, image='static/IMG/')
-    else:
-        return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
