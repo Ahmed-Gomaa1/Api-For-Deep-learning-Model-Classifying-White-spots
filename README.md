@@ -1,1 +1,1 @@
-White spots Classification Deep learning Model
+White spots Classification by Deep learning Model
