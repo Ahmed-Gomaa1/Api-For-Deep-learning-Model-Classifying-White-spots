@@ -6,7 +6,7 @@ import tensorflow as tf
 app = Flask(__name__)
 
 classes = ['Normal Skin','Pityriasis Alba','Tinea Versicolor','Vitiligo']
-with open('Best1Resnet50.tflite', 'rb') as fid:
+with open('LastResnet50.tflite', 'rb') as fid:
     tflite_model = fid.read()
 tflite_interpreter = tf.lite.Interpreter(model_content=tflite_model)
 print("Model loaded ...")
