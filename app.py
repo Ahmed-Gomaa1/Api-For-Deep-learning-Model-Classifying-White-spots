@@ -26,7 +26,7 @@ def index():
 
 
 @app.route('/predictApi', methods=["POST"])
-def api():
+def predictApi():
     # Get the image from post request
     try:
         if 'fileup' not in request.files:
