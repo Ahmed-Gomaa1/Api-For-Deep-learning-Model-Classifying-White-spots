@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, jsonify
 from PIL import Image
 import numpy as np
 import tensorflow as tf 
-import json
+from array import *
 
 app = Flask(__name__)
 
@@ -45,13 +45,17 @@ def predictApi():
         tflite_interpreter.invoke()
         tflite_model_predictions = tflite_interpreter.get_tensor(output_details[0]['index'])
         print("Model finished predicting ...")
-
-        print(tflite_model_predictions)
+        
         ind = np.argmax(tflite_model_predictions)
         prediction = classes[ind]
         print(prediction)
-        results={'prediction':prediction,'Percentages':list(tflite_model_predictions)}
-        return json.dumps(results)
+        
+        Percentages=[]
+        data=tflite_model_predictions.tolist()
+        for i in range(4):
+            Percentages.append(round(data[0][i],7))
+            
+        return jsonify({'prediction':prediction,'Percentages':Percentages})
     except:
         return jsonify({'Error': 'Error occur'})
 
