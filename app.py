@@ -49,8 +49,8 @@ def predictApi():
         ind = np.argmax(tflite_model_predictions)
         prediction = classes[ind]
         print(prediction)
-        Results={'prediction': prediction, 'Percentages': tflite_model_predictions}
-        return jsonify({'Results': Results})
+        results=[prediction,tflite_model_predictions}
+        return jsonify({'results':results})
     except:
         return jsonify({'Error': 'Error occur'})
 
