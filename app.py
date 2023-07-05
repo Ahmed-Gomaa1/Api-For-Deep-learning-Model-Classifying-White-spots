@@ -50,7 +50,7 @@ def predictApi():
         prediction = classes[ind]
         print(prediction)
         results={'prediction':prediction,'Percentages':list(tflite_model_predictions)}
-        return jsonify({'results':results})
+        return jsonify(results)
     except:
         return jsonify({'Error': 'Error occur'})
 
